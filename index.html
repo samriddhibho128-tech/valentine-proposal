@@ -9,88 +9,102 @@
 body{
 margin:0;
 font-family:Arial, sans-serif;
-background:#062c33;
+background:linear-gradient(135deg,#ffe6f0,#ffd6ec,#fff0f5);
 text-align:center;
-color:white;
+color:#444;
 overflow:hidden;
 }
 
 h1{
 margin-top:40px;
-font-size:42px;
+font-size:45px;
+color:#ff4d88;
 }
 
 h1 span{
-color:#7CFC00;
+color:#66cc66;
 }
 
 .card{
 background:white;
-width:350px;
+width:360px;
 margin:40px auto;
 padding:30px 20px;
-border-radius:12px;
-color:black;
-box-shadow:0 0 25px rgba(0,0,0,0.4);
-transition:0.5s;
+border-radius:15px;
+color:#444;
+box-shadow:0 10px 30px rgba(255,182,193,0.4);
+position:relative;
 }
 
 .card img{
 width:160px;
+margin-bottom:10px;
 }
 
 .question{
-color:#e74c3c;
+color:#ff5c8a;
 font-size:20px;
-margin:20px 0;
+margin:15px 0;
 }
 
 .buttons{
 margin-top:20px;
+position:relative;
 }
 
 button{
 padding:10px 20px;
 font-size:18px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
 margin:5px;
 transition:0.3s;
 }
 
 .yes-button{
-background:#ff0066;
+background:#ff66a3;
 color:white;
 }
 
 .no-button{
-background:#d3d3d3;
-color:black;
-}
-
-.hidden{
-display:none;
+background:#f0f0f0;
+color:#555;
 }
 
 .fullscreen-yes{
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
-font-size:80px !important;
+width:100vw;
+height:100vh;
+font-size:120px;
 border-radius:0;
-z-index:1000;
+z-index:999;
+background:#ff66a3;
+color:white;
+}
+
+.hidden{
+display:none;
 }
 
 .final-card{
 background:white;
-width:400px;
+width:380px;
 margin:60px auto;
-padding:30px;
-border-radius:12px;
-color:black;
+padding:30px 20px;
+border-radius:15px;
+color:#444;
+box-shadow:0 10px 30px rgba(255,182,193,0.4);
+}
+
+.final-card img{
+width:200px;
+}
+
+.final-card h2{
+color:#ff5c8a;
 }
 </style>
 </head>
@@ -101,7 +115,7 @@ color:black;
 
 <div class="card" id="mainCard">
 
-<img id="bearImage" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 
 <div class="question">
 Will you be my Valentine?
@@ -109,85 +123,71 @@ Will you be my Valentine?
 
 <div class="buttons">
 <button class="yes-button" id="yesBtn">Yes</button>
-<button class="no-button" id="noBtn">Really sure??</button>
+<button class="no-button" id="noBtn">No</button>
 </div>
 
 </div>
 
-<div class="hidden" id="finalScreen">
+<div class="final-card hidden" id="finalCard">
 
-<div class="final-card">
-<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="180">
+<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
 
-<h2 style="color:#e74c3c;">Knew you would say yes! 💖</h2>
+<h2>Knew you would say yes! 💖</h2>
 
-<p style="margin-top:15px; font-size:16px;">
+<p style="margin-top:15px; font-size:16px; line-height:1.6;">
 Nilanjan,  
-From the moment you walked into my life,  
-everything felt softer, brighter, and warmer.  
+You are the sweetest blessing in my life.  
+Your smile warms my heart and your love makes everything beautiful.  
 
-You are my safe place,  
-my comfort,  
-my happiness.  
-
-On this Valentine’s Day,  
-I just want you to know  
-that my heart chose you  
-and will always choose you.  
+On this special day,  
+I just want to remind you that  
+I choose you,  
+I cherish you,  
+and I love you more than words can express.  
 
 Happy Valentine’s Day, my love. 💕  
 – Samriddhi
 </p>
 
 </div>
-</div>
 
 <script>
 let messageIndex = 0;
-let clickCount = 0;
 
 const messages = [
+"Really sure??",
 "Are you positive?",
 "Pookie please...",
 "Just think about it!",
-"If you say no I will be really sad...",
+"If you say no I’ll be sad...",
 "I will cry 🥺",
-"My heart will break 💔",
-"Please say yes ❤️"
-];
-
-const bearImages = [
-"https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
-"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
-"https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif",
-"https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+"Last chance 💕"
 ];
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const bearImage = document.getElementById("bearImage");
+const finalCard = document.getElementById("finalCard");
 const mainCard = document.getElementById("mainCard");
-const finalScreen = document.getElementById("finalScreen");
 
 function handleNoClick(){
 noBtn.textContent = messages[messageIndex];
 messageIndex = (messageIndex + 1) % messages.length;
 
-bearImage.src = bearImages[clickCount % bearImages.length];
-clickCount++;
-
 let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-yesBtn.style.fontSize = (currentSize * 1.5) + "px";
+yesBtn.style.fontSize = (currentSize * 1.4) + "px";
+yesBtn.style.padding = "15px 30px";
 
-if(clickCount >= 6){
+if(currentSize > 90){
 yesBtn.classList.add("fullscreen-yes");
+noBtn.style.display = "none";
 }
 }
 
 function handleYesClick(){
 mainCard.classList.add("hidden");
-finalScreen.classList.remove("hidden");
-document.body.style.background="#062c33";
+yesBtn.classList.remove("fullscreen-yes");
+document.body.style.overflow = "auto";
+finalCard.classList.remove("hidden");
 }
 
 noBtn.addEventListener("click", handleNoClick);
