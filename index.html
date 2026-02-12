@@ -1,181 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samriddhi ❤️ Nilanjan</title>
+<title>Be My Valentine</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ff4e8b,#ff0080);
-overflow:hidden;
+margin:0;
+font-family:Arial, sans-serif;
+background:#062c33;
 text-align:center;
 color:white;
-transition:0.6s;
-}
-
-.container{
-max-width:600px;
-padding:20px;
+overflow:hidden;
 }
 
 h1{
-font-size:2.5rem;
-margin-bottom:20px;
-animation: float 2s ease-in-out infinite alternate;
+margin-top:40px;
+font-size:42px;
 }
 
-@keyframes float{
-from{transform:translateY(0);}
-to{transform:translateY(-10px);}
+h1 span{
+color:#7CFC00;
+}
+
+.card{
+background:white;
+width:350px;
+margin:40px auto;
+padding:30px 20px;
+border-radius:12px;
+color:black;
+box-shadow:0 0 25px rgba(0,0,0,0.4);
+transition:0.5s;
+}
+
+.card img{
+width:160px;
+}
+
+.question{
+color:#e74c3c;
+font-size:20px;
+margin:20px 0;
 }
 
 .buttons{
-margin-top:30px;
-position:relative;
+margin-top:20px;
 }
 
 button{
-padding:12px 25px;
+padding:10px 20px;
 font-size:18px;
 border:none;
-border-radius:40px;
+border-radius:6px;
 cursor:pointer;
-margin:10px;
+margin:5px;
 transition:0.3s;
 }
 
-#yesBtn{
-background:white;
-color:#ff0080;
-font-weight:bold;
-}
-
-#noBtn{
-background:black;
+.yes-button{
+background:#ff0066;
 color:white;
-position:absolute;
 }
 
-.heart{
-position:absolute;
-bottom:-20px;
-font-size:20px;
-animation: rise 6s linear infinite;
-opacity:0.8;
+.no-button{
+background:#d3d3d3;
+color:black;
 }
 
-@keyframes rise{
-0%{transform:translateY(0);}
-100%{transform:translateY(-110vh);}
-}
-
-#finalScreen{
+.hidden{
 display:none;
-animation: fadeIn 1s ease forwards;
 }
 
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
+.fullscreen-yes{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+font-size:80px !important;
+border-radius:0;
+z-index:1000;
+}
+
+.final-card{
+background:white;
+width:400px;
+margin:60px auto;
+padding:30px;
+border-radius:12px;
+color:black;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="mainScreen">
-<h1 id="question">Nilanjan, will you be my Valentine? 💖</h1>
+<h1>Be My <span>Valentine</span></h1>
+
+<div class="card" id="mainCard">
+
+<img id="bearImage" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+
+<div class="question">
+Will you be my Valentine?
+</div>
 
 <div class="buttons">
-<button id="yesBtn">YES 😍</button>
-<button id="noBtn">NO 🙈</button>
-</div>
+<button class="yes-button" id="yesBtn">Yes</button>
+<button class="no-button" id="noBtn">Really sure??</button>
 </div>
 
-<div class="container" id="finalScreen">
-<h1>Samriddhi ❤️ Nilanjan</h1>
-<h2>Forever & Always 💍</h2>
-<p style="margin-top:20px;">
-You are my today, my tomorrow and my forever.  
-Thank you for saying YES 💖
+</div>
+
+<div class="hidden" id="finalScreen">
+
+<div class="final-card">
+<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="180">
+
+<h2 style="color:#e74c3c;">Knew you would say yes! 💖</h2>
+
+<p style="margin-top:15px; font-size:16px;">
+Nilanjan,  
+From the moment you walked into my life,  
+everything felt softer, brighter, and warmer.  
+
+You are my safe place,  
+my comfort,  
+my happiness.  
+
+On this Valentine’s Day,  
+I just want you to know  
+that my heart chose you  
+and will always choose you.  
+
+Happy Valentine’s Day, my love. 💕  
+– Samriddhi
 </p>
+
+</div>
 </div>
 
 <script>
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const question=document.getElementById("question");
-const mainScreen=document.getElementById("mainScreen");
-const finalScreen=document.getElementById("finalScreen");
+let messageIndex = 0;
+let clickCount = 0;
 
-let yesSize=18;
-let messages=[
-"Are you sure? 🥺",
-"Think again! 😅",
-"Pleaseeee? 💕",
-"I’ll be sad 🥹",
-"Last chance 🙈"
+const messages = [
+"Are you positive?",
+"Pookie please...",
+"Just think about it!",
+"If you say no I will be really sad...",
+"I will cry 🥺",
+"My heart will break 💔",
+"Please say yes ❤️"
 ];
-let index=0;
 
-/* Floating hearts */
-for(let i=0;i<30;i++){
-let heart=document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="💖";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
-heart.style.fontSize=(15+Math.random()*25)+"px";
-document.body.appendChild(heart);
-}
+const bearImages = [
+"https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+"https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif",
+"https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+];
 
-/* NO button moves */
-noBtn.addEventListener("mouseover",()=>{
-noBtn.style.top=Math.random()*300+"px";
-noBtn.style.left=Math.random()*300+"px";
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const bearImage = document.getElementById("bearImage");
+const mainCard = document.getElementById("mainCard");
+const finalScreen = document.getElementById("finalScreen");
 
-if(index < messages.length){
-question.innerText=messages[index];
-index++;
-}
+function handleNoClick(){
+noBtn.textContent = messages[messageIndex];
+messageIndex = (messageIndex + 1) % messages.length;
 
-yesSize+=5;
-yesBtn.style.fontSize=yesSize+"px";
-yesBtn.style.padding=(12+index*2)+"px "+(25+index*5)+"px";
-});
+bearImage.src = bearImages[clickCount % bearImages.length];
+clickCount++;
 
-/* YES clicked */
-yesBtn.addEventListener("click",()=>{
-mainScreen.style.display="none";
-finalScreen.style.display="block";
-document.body.style.background="linear-gradient(135deg,#ff0080,#ffcc00)";
-confetti();
-});
+let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+yesBtn.style.fontSize = (currentSize * 1.5) + "px";
 
-/* Celebration hearts */
-function confetti(){
-for(let i=0;i<50;i++){
-let heart=document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="💘";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration="3s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),3000);
+if(clickCount >= 6){
+yesBtn.classList.add("fullscreen-yes");
 }
 }
+
+function handleYesClick(){
+mainCard.classList.add("hidden");
+finalScreen.classList.remove("hidden");
+document.body.style.background="#062c33";
+}
+
+noBtn.addEventListener("click", handleNoClick);
+yesBtn.addEventListener("click", handleYesClick);
 </script>
 
 </body>
